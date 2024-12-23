@@ -1,0 +1,31 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# npm package-lock file
+package-lock.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# IDE/editor directories and files
+.idea/
+.vscode/
+
+# Coverage directory from testing
+coverage/
+
+# Build output (if applicable)
+dist/
+build/
+
+# Mac system files
+*.swp
