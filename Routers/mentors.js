@@ -4,29 +4,24 @@ const mentorRouter = express.Router();
 
 
 mentorRouter.post('/create', async (req, res) => {
-    const { id, name, subject } = req.body;
+    const mentorDetails = req.body;
+    
+    // Log the incoming data for debugging
+    console.log("Received mentor details:", mentorDetails);
+
     try {
-        // Check if the mentor already exists
-        const existingMentor = await db.collection('mentors').findOne({ id });
-        if (existingMentor) {
-            return res.status(400).send({ message: 'Mentor already exists' });
-        }
-
-        // Insert new mentor into the database
-        const newMentor = { id, name, subject, students: [] };
-        await db.collection('mentors').insertOne(newMentor);
-
-        // Send success response
-        res.status(201).send({ message: 'Mentor created successfully', mentor: newMentor });
+        await db.collection('mentors').insertOne({
+            ...mentorDetails,
+            id: Date.now().toString(),
+            students: []
+        });
+        res.status(201).send({ message: 'mentor added' });
     } catch (error) {
-        res.status(500).send({ message: 'Internal Server Error' });
+        // Log the error details to help with debugging
+        console.error("Error inserting mentor:", error);
+        res.status(500).send({ message: 'internal server error' });
     }
 });
-
-
-
-
-
 
 
 mentorRouter.post('/:id', async (req, res) => {

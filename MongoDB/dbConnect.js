@@ -3,8 +3,6 @@ import dotenv from "dotenv"
 
 dotenv.config();
 
-console.log(process.env);
-
 // const dbURL = "localhost:27017";  // Corrected URL format Local
 // const dbName = "Students_Mentor"; // Database name
 
