@@ -77,13 +77,16 @@ mentorRouter.post('/:id', async (req, res) => {
 mentorRouter.get('/mentor/:mentorId', async (req, res) => {
     const { mentorId } = req.params;
     try {
-      const students = await student.find({ mentor: mentorId });
-      if (!students) return res.status(404).json({ message: 'No students found for this mentor' });
-      res.status(200).json(students);
+        const students = await db.collection('student').find({ teacher: mentorId }).toArray();
+        if (!students || students.length === 0) {
+            return res.status(404).json({ message: 'No students found for this mentor' });
+        }
+        res.status(200).json(students);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
-  });
+});
+
   
 
 export default mentorRouter;
