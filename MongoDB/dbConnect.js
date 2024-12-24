@@ -22,7 +22,7 @@ if (!db_userName || !db_password || !db_cluster) {
     process.exit(1);
 }
 
-const cloudURL='mongodb://ThilagavathiMC:Thilaga19@atlas-sql-676569a201bd4a206891d3f2-usytv.a.query.mongodb.net/Students_Mentor?ssl=true&authSource=admin'
+const cloudURL=`mongodb://${db_userName}:${db_password}@${db_cluster}/${db_Name}r?ssl=true&authSource=admin`
 const client = new MongoClient(cloudURL);
 
 const db = client.db(db_Name);
