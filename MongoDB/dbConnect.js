@@ -20,7 +20,9 @@ if (!db_userName || !db_password || !db_cluster) {
     process.exit(1);
 }
 
-const cloudURL=`mongodb://${db_userName}:${db_password}@${db_cluster}/${db_Name}r?ssl=true&authSource=admin`
+const cloudURL=`mongodb+srv://${db_userName}:${db_password}@${db_cluster}/?retryWrites=true&w=majority&appName=Cluster0`
+
+
 const client = new MongoClient(cloudURL);
 
 const db = client.db(db_Name);
