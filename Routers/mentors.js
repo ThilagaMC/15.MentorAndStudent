@@ -2,6 +2,33 @@ import express from "express";
 import { db } from "../MongoDB/dbConnect.js";
 const mentorRouter = express.Router();
 
+
+mentorRouter.post('/create', async (req, res) => {
+    const { id, name, subject } = req.body;
+    try {
+        // Check if the mentor already exists
+        const existingMentor = await db.collection('mentors').findOne({ id });
+        if (existingMentor) {
+            return res.status(400).send({ message: 'Mentor already exists' });
+        }
+
+        // Insert new mentor into the database
+        const newMentor = { id, name, subject, students: [] };
+        await db.collection('mentors').insertOne(newMentor);
+
+        // Send success response
+        res.status(201).send({ message: 'Mentor created successfully', mentor: newMentor });
+    } catch (error) {
+        res.status(500).send({ message: 'Internal Server Error' });
+    }
+});
+
+
+
+
+
+
+
 mentorRouter.post('/:id', async (req, res) => {
     const mentorID = req.params.id;
     const studentIds = req.body.students;
@@ -55,7 +82,7 @@ mentorRouter.post('/:id', async (req, res) => {
 mentorRouter.get('/mentor/:mentorId', async (req, res) => {
     const { mentorId } = req.params;
     try {
-      const students = await Student.find({ mentor: mentorId });
+      const students = await student.find({ mentor: mentorId });
       if (!students) return res.status(404).json({ message: 'No students found for this mentor' });
       res.status(200).json(students);
     } catch (error) {
